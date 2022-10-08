@@ -1,0 +1,1 @@
+autopep8 -i config.py

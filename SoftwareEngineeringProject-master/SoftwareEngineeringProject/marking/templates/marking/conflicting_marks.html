@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+
+<style>
+
+    table {
+  border-collapse: collapse;
+  width: 100%;
+  font-family: arial, sans-serif;
+}
+
+th, td {
+  text-align: center;
+  padding: 8px;
+}
+
+thead{
+    border: 1px solid #F8F8F8;
+    text-align: center;
+    padding: 10px;
+    background-color: #E0E0E0;
+}
+
+H1{
+    text-align:center;
+    font-family: arial, sans-serif;
+    color: #0E73B9;
+}
+html{
+    height: 100%;
+    display: table;
+    margin: auto;
+}
+body{
+    width:1024px;
+}
+
+tbody:nth-child(odd) {background-color: #f2f2f2; text-align: center}
+
+</style>
+
+<html lang = "en-gb">
+{% load static %}
+<head>
+	<title>Conflicting Marks</title>
+    <link rel="shortcut icon" href="{% static 'images/Trinity Favicon.ico' %}" />
+</head>
+<body>
+
+ <H1> Conflicting Marks </H1>
+
+    <table>
+        <thead >
+            <tr>
+                <th>Title:</th>
+                <th>ProjectID:</th>
+                <th>Supervisor:</th>
+                <th>StudentID:</th>
+                <th>Reader One Mark:</th>
+                <th>Reader Two Mark:</th>
+                <th>Difference in Grade</th>
+            </tr>
+        </thead>
+
+        {% for project in project_list %}
+        <tbody >
+            <tr >
+                <td >{{ project.title }} </td>
+                <td >{{ project.id }}</td>
+                <td>{{ project.supervisor }}</td>
+                <td>{{ project.student }} </td>
+                <td>{{ project.readerOneMark }}</td>
+                <td> {{ project.readerTWoMark }} </td>
+                 <td> {{ project.differenceInMarks }} </td>
+            </tr>
+        </tbody>
+
+        {% endfor %}
+    </table>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>SCSS Marking</title>
+	{% load static %}
+      <link rel="stylesheet"  href = "{% static 'CSS/landing.css'%}" >
+</head>
+<body>
+	{% load static %}
+
+	<div style = "height:10vh;width:110vw;position:absolute;left:-5vw;top:-.5vh;background-color:#0068AF"></div>
+	<!--Bar at top of display-->
+	<div style = "height:12.5vh;position:relative">
+		<div style = "height:25vh;width:25vh;background-color:white;border-radius:100%;margin:auto;position:relative;box-shadow: 5px 10px 8px #888888;">
+			<div style = "height:90%;width:90%;text-align:center;margin: 0;position: absolute;top: 50%;left: 50%;margin-right: -50%;transform: translate(-50%, -50%);border: 3px solid #0068AF;border-radius:100%">
+				<div style = "height:100%;width:100%;border-radius:100%;margin:auto;position:relative;">
+					<img style = "height:100%" src = "{% static './images/camponile2.png'%}" />
+				</div>
+			</div>
+		</div>
+	</div>
+	
+
+	
+	<!--Tracking and marking menu-->
+	<div style= "height:17.5vh"></div>
+	<div style = "height:50vh;width:70vw;margin:auto;">
+		<!--panel 1: tracking-->
+		<a href="/tracking/">
+			<div id = "tracking">
+				<div style = "height:70%;width:100%;">
+					<div style = "height:20%"></div>
+					<div style = "height:65%;width:65%;margin:auto">
+						<img style = "width:100%" src = "{% static './images/graph.png'%}">
+					</div>
+				</div>
+				<!--Text-->
+				<div style = "height:30%;width:100%;position:relative">
+					<div style = "text-align:center;margin: 0;position: absolute;top: 50%;left: 50%;margin-right: -50%;transform: translate(-50%, -50%);">
+						<div style = "position:relative;height:100%;width:100%;font-size:2em;color:#0068AF">Tracking</div>
+					</div>
+				</div>
+			</div>
+		</a>
+		<!--panel 2: marking-->
+		{% load static %}
+		<a class = "marking" href = "/marking/"> 
+			<div id = "marking">
+				<div style = "height:70%;width:100%">
+					<div style = "height:20%"></div>
+					<div style = "height:65%;width:65%;margin:auto;">
+						<img style = "width:100%" src = "{% static './images/Grade_Blue.png'%}">
+					</div>
+				</div>
+				<!--Text-->
+				<div style = "height:30%;width:100%;position:relative">
+					<div style = "text-align:center;margin: 0;position: absolute;top: 50%;left: 50%;margin-right: -50%;transform: translate(-50%, -50%);">
+						<div style = "position:relative;height:100%;width:100%;font-size:2em;color:#0068AF">Marking</div>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+</body>
+</html>

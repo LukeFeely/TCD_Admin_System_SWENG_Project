@@ -1,0 +1,118 @@
+{% extends "tracking/base.html" %}
+{% block content %}
+
+<!--block for the table sorting function-->
+<script type="text/javascript" src="http://friedcell.si/js/SortedTable/Event.js"></script>
+<script type="text/javascript" src="http://friedcell.si/js/SortedTable/SortedTable.js"></script>
+<script type="text/javascript">//<![CDATA[
+    var sourceTable, destTable;
+    onload = function() {
+        sourceTable = new SortedTable('s');
+        destTable = new SortedTable('d');
+        mySorted = new SortedTable();
+        mySorted.colorize = function() {
+            for (var i=0;i<this.elements.length;i++) {
+                if (i%2){
+                    this.changeClass(this.elements[i],'even','odd');
+                } else {
+                    this.changeClass(this.elements[i],'odd','even');
+                }
+            }
+        }
+        mySorted.onsort = mySorted.colorize;
+        mySorted.onmove = mySorted.colorize;
+        mySorted.colorize();
+        secondTable = SortedTable.getSortedTable(document.getElementById('id'));
+        secondTable.allowDeselect = false;
+    }
+    function moveRows(s,d) {
+        var a = new Array();
+        for (var o in s.selectedElements) {
+            a.push(s.selectedElements[o]);
+        }
+        for (var o in a) {
+            var elm = a[o];
+            var tds = elm.getElementsByTagName('td');
+            for (var i in tds) {
+                if (tds[i].headers) tds[i].headers = d.table.id+''+tds[i].headers.substr(d.table.id.length);
+            }
+            d.body.appendChild(a[o]);
+            d.deselect(a[o]);
+            d.init(d.table);
+            d.sort();
+            s.deselect(a[o]);
+            s.init(s.table);
+        }
+    }
+//]]></script>
+
+<!--the style of table-->
+<style type="text/css">
+
+    /* table styles */
+    table {border:0;padding:0;margin:0 0 1em;border-left:1px solid #336;border-top:1px solid #336;float:left;clear:left;}
+    tr {border:0;padding:0;margin:0;}
+    td, th {border:0;padding:2px 6px;margin:0;border-right:1px solid #336;border-bottom:1px solid #336;background-color:#EAEEF3;}
+    td[axis='number'], td[axis='date'] {text-align:right;}
+    th {white-space:no-wrap;background-color:lightblue;padding:2px 20px;}
+    thead th {border-bottom:2px solid #003;}
+    .even td {background-color: lightcyan;}
+    .odd td {background-color:rgb(186, 230, 245);}
+    .hover td {background-color:lightsteelblue;}
+    .sortedminus {background-color:lightpink;}
+    .sortedplus {background-color:lightyellow;}
+    .selrow td {background-color:lightgray;}
+    
+</style>
+
+    <img src="http://www.universitytimes.ie/wp-content/uploads/2014/12/print-web-trinity.jpg" width="500" height="170" />
+    <h1 style="text-align:center; font-size:250%; position: relative; top: -100px">Student Projects</h1>
+    
+    <a href="http://127.0.0.1:8000/tracking/adminsupervisors/" target="_blank" style="position: relative; top:-50px; left: 300px">click here to go to supervisor page</a>
+    <p style="position: relative; top:-50px; left: 300px">Click header to sort</p>
+    
+    
+    <div style="text-align:center; background-color:lightblue; width:200px; height:250px; font-size: 130%; position: relative; top:-30px">
+        <h3 style="font-size: 140%">Selection</h3>
+        <a id="All">All</a><br>
+        <a id="Assigned">Assigned</a><br>
+        <a id="Awaiting">Awaiting</a>
+    </div>
+
+    <!--the content of the table-->
+    <div class = "content">
+    <table style="width: 70%; position: relative; top: -300px; left: 300px; font-size:120%" class="sorted">
+        <thead>
+        <tr>
+            <th class="sortedminus" id="status">status</th>
+            <th id="studentID"><span>student ID</span></th>
+            <th id="studentName" style="width: 200px"><span>Student name</span></th>
+            <th id="email"><span>email</span></th>
+            <th id="year"><span>year</span></th>
+            <th id="course"><span>course</span></th>
+            <th id="project" style="width: 250px"><span>project</span></th>
+            <th id="supervisor" style="width: 200px"><span>supervisor</span></th>
+            <th id="secondReader" style="width: 200px"><span>second reader</span></th>
+        </tr>
+        </thead>
+        <tbody style="text-align: center">
+        {% for student in object_list %}
+            {% if student.doingCompSciProject %}
+            <td class="assigned" style="background-color:lightgreen;">Assigned</td>
+            {% else %}
+            <td class="awaiting" style="background-color: lightsalmon;">Awaiting</td>
+            {% endif %}
+            <td axis="number" headers="studentID" >{{ student.studentNumber}}</td>
+            <td axis="string" headers="studentName"><div><a href="mailto:{{student.email}}" target="_blank">{{ student.firstName }} {{ student.surname}}</a></div></td>
+            <td axis="string" headers="email"><a href="mailto:{{student.email}}">{{student.email }}</a></td>
+            <td axis="number" headers="year">{{ student.year }}</td>
+            <td axis="string" headers="course">{{ student.degree }}</td>
+            <td axis="string" headers="project">{{ student.doingCompSciProject}}</td>
+            <td axis="string" headers="supervisor"><a href="mailto:{{student.doingCompSciProject.supervisor.email}}">{{ student.doingCompSciProject.supervisor }}</a></td>
+            <td axis="string" headers="secondReader">{{ student.doingCompSciProject.secondReader }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+{% endblock content %}

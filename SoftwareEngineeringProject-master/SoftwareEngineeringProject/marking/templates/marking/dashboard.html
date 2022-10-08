@@ -1,0 +1,202 @@
+<html>
+   <head>
+      <!-- Bootstrap imports -->
+      {% load static %}
+      <link rel="shortcut icon" href="{% static 'images/Trinity Favicon.ico' %}" />
+      <link rel="stylesheet"  href = "{% static 'CSS/dashboard.css'%}" >
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+   </head>
+   <header>
+
+      <link rel="shortcut icon" href="{% static 'images/Trinity Favicon.ico' %}" />
+      <link rel="stylesheet"  href = "{% static 'CSS/dashboard.css'%}" >
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+      <nav style = "background-color:#0068AE;height:8vh" class="navbar navbar-expand-lg navbar-light " >
+         <a style= "color:white"class="navbar-brand" href="#">Marking Dashboard</a>
+         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+         <span class="navbar-toggler-icon"></span>
+         </button>
+         
+         <div class="collapse navbar-collapse navbar-nav ml-auto" id="navbarNavAltMarkup">
+            <div class="navbar-nav navbar-nav ml-auto">
+               
+               <a style= "color:white;font-size:1.25em"class=" navbar-nav ml-auto nav-item nav-link " href="/loginredirect/">Apps Page</a>
+               <a style= "color:white;font-size:1.2em" class="nav-item nav-link navbar-nav ml-auto" href="/">Log Out</a>
+               <a style= "color:white;width:2.5em"class=" navbar-nav ml-auto nav-item nav-link " href="#"></a>
+            </div>
+         </div>
+      </nav>
+   </header>
+   <body>
+      <div style="height:1vh;width:100vw"></div>
+      <h3>
+         <div style ="float:left;height:1vh;width:3vh"></div>
+         
+      </h3>
+      <hr>
+      <div style = "height:8vh"></div>
+      <div class="container">
+         <div class="row">
+            <div class="col" style="height:35vh;">
+               <a href = "/marking/corrected/">
+                  <div class  = "correctedMarks" style = "height:80%;width:80%;margin:auto;top:10%;border-radius:8px;border: 6px solid #6CD670;cursor:pointer;box-shadow: 5px 10px 8px #888888;color:black">
+                     <!--cell image-->
+                     <div style = "float:left;height:100%;width:40%;position:relative;">
+                        <div style = "margin: 0;position: absolute;top: 50%;left: 50%;margin-right: -50%;transform: translate(-50%, -50%)">
+                           {% load static %}
+                           <figure>
+                              <img src = "{% static 'images/A+_BRIGHTGREEN.png'%}" style = "width:100%">
+                           </figure>
+                        </div>
+                     </div>
+                     <!--cell text-->
+                     <div style = "color:black;height:100%;width:60%;float:left;position:relative;">
+                        <div style = "height:45%;width:100%;margin: 0;position: absolute;top: 50%;left: 50%;margin-right: -50%;transform: translate(-50%, -50%)">
+                           <div style = "height:100%;width:90%;margin:auto;word-wrap: break-word;font-size:2em">
+                              Corrected <br>Marks
+                           </div>
+                        </div>
+                        <!--Number (Bottom Right Hand Corner)-->
+                        <div style = "height:75%;width:100%"></div>
+                        <div  style = "height:25%;position:relative;width:100%;">
+                           <div style = "float:right;height:100%;width:5%;"></div>
+                           <div class ="correctedBall" style = "float:right;height:5.5vh;width:5.5vh;border-radius:100%;position:relative">
+                              <!--number text-->
+                              <div style = "font-size:1.7em;text-align:center;margin: 0;position: absolute;top: 50%;left: 50%;margin-right: -50%;transform: translate(-50%, -50%);">
+                                 <div id="correctedMarksText" >
+                                    <figcaption>{{corrected_marks_count}}</figcaption>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </a>
+               </div>
+            </div>
+            <!--Not corrected-->
+            <div class="col"  style="height:35vh">
+              {% load static %}
+              <a href="/marking/uncorrected/">
+               <div id  = "notCorrected"  style = "color:black;height:80%;width:80%;margin:auto;top:10%;border-radius:8px;border: 6px solid #606060;cursor:pointer;box-shadow: 5px 10px 8px #888888;">
+                  <div style = "float:left;height:100%;width:40%;position:relative;">
+                     <!--cell image-->
+                     <div style = "height:60%;width:80%;margin: auto;position: absolute;top: 50%;left: 50%;margin-right: -50%;transform: translate(-50%, -50%)">
+                        <div style = "position:relative;height:100%;width:100%">
+                           <div style = "margin: 0;position: absolute;top: 50%;left: 50%;margin-right: -50%;transform: translate(-50%, -50%)">
+                              
+                              <!--a href="/NotCorrected"-->
+                                 <figure>
+                                    <img src = "{% static './images/notCorrected.png'%}" style = "width:100%">
+                              <!--/a-->
+                              </figure>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <!--cell text-->
+                  <div style = "height:100%;width:60%;float:left;position:relative">
+                     <div style = "height:45%;width:100%;margin: 0;position: absolute;top: 50%;left: 50%;margin-right: -50%;transform: translate(-50%, -50%)">
+                        <div style = "height:100%;width:90%;margin:auto;word-wrap: break-word;font-size:2em">
+                           Not<br>Corrected
+                        </div>
+                     </div>
+                     <!--Number (Bottom Right Hand Corner)-->
+                     <div style = "height:75%;width:100%"></div>
+                     <div  style = "height:25%;position:relative;width:100%;">
+                        <div style = "float:right;height:100%;width:5%;"></div>
+                        <div id  ="notCorrectedBall" style = "float:right;height:5.5vh;width:5.5vh;border-radius:100%;position:relative">
+                           <!--number text-->
+                           <div style = "font-size:1.7em;text-align:center;margin: 0;position: absolute;top: 50%;left: 50%;margin-right: -50%;transform: translate(-50%, -50%)">
+                              <div id  = "notCorrectedCountText">
+                                 <figcaption>{{not_corrected_marks_count}}</figcaption>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               </a>
+            </div>
+         </div>
+         <div class="row 1">
+            <div class="col"  style="height:35vh;">
+              {% load static %}
+              <a href = "/marking/conflicting/">
+               <div id  = "conflictingMarks"  style = "color:black;height:80%;width:80%;margin:auto;;top:10%;border-radius:8px;border: 6px solid #E05850;cursor:pointer;box-shadow: 5px 10px 8px #888888">
+                  <div style = "float:left;height:100%;width:40%;position:relative;">
+                     <!--cell image-->
+                     <div style = "width:100%;margin: 0;position: absolute;top: 50%;left: 50%;margin-right: -50%;transform: translate(-50%, -50%)">
+                        <div style = "position:relative;height:100%;width:100%">
+                           <div style = "width:80%;margin: auto;position: absolute;top: 50%;left: 50%;margin-right: -50%;transform: translate(-50%, -50%)">
+                              
+                              <figure>
+                               
+                                 <img src = "{% static 'images/exclamation.png'%}" style = "width:100%">
+                           
+                              </figure>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <!--cell text-->
+                  <div style = "color:black;height:100%;width:60%;float:left;position:relative">
+                     <div style = "height:45%;width:100%;margin: 0;position: absolute;top: 50%;left: 50%;margin-right: -50%;transform: translate(-50%, -50%)">
+                        <div style = "height:100%;width:90%;margin:auto;word-wrap: break-word;font-size:2em">
+                           Conflicting <br>Marks
+                        </div>
+                     </div>
+                     <!--Number (Bottom Right Hand Corner)-->
+                     <div style = "height:75%;width:100%"></div>
+                     <div  style = "height:25%;position:relative;width:100%;">
+                        <div style = "float:right;height:100%;width:5%;"></div>
+                        <div id = "conflictingMarksBall" style = "float:right;height:5.5vh;width:5.5vh;border-radius:100%;position:relative">
+                           <!--number text-->
+                           <div style = "font-size:1.7em;text-align:center;margin: 0;position: absolute;top: 50%;left: 50%;margin-right: -50%;transform: translate(-50%, -50%)">
+                              <div id = "conflictingMarksCountText">
+                                 <figcaption>{{conflicting_marks_count}}</figcaption>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                </a>
+               </div>
+            </div>
+            <div class="col" style="height:35vh;">
+            <a href = "/marking/presentations/">
+               <div  id  = "presentationTimes"  style = "color:black;height:80%;width:80%;margin:auto;;top:10%;border-radius:8px;border: 6px solid #E0E16B;cursor:pointer;box-shadow: 5px 10px 8px #888888">
+                  <div style = "float:left;height:100%;width:40%;position:relative;">
+                     <!--cell image-->
+                     <div style = "width:100%;;margin: 0;position: absolute;top: 50%;left: 50%;margin-right: -50%;transform: translate(-50%, -50%)">
+                        <div style = "position:relative;height:100%;width:100%">
+                           <div style = "width:80%;;margin: 0;position: absolute;top: 50%;left: 50%;margin-right: -50%;transform: translate(-50%, -50%)">
+                              {% load static %}
+                              <img src = "{% static 'images/calender.png'%}" style = "width:100%">
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <!--cell text-->
+                  <div style = "height:100%;width:60%;float:left;position:relative">
+                     <div style = "height:45%;width:100%;margin: 0;position: absolute;top: 50%;left: 50%;margin-right: -50%;transform: translate(-50%, -50%)">
+                        <div style = "height:100%;width:90%;margin:auto;word-wrap: break-word;font-size:2em">
+                           Presentation<br>Times
+                        </div>
+                     </div>
+                     <!--Number (Bottom Right Hand Corner)-->
+                     <div style = "height:75%;width:100%"></div>
+                     <div  style = "height:25%;position:relative;width:100%;">
+                        <div style = "float:right;height:100%;width:5%;"></div>
+                        <div id = "presentationTimesBall" style = "float:right;height:5.5vh;width:5.5vh;border-radius:100%"></div>
+                     </div>
+                  </div>
+               </div>
+            </a>
+            </div>
+         </div>
+      </div>
+   </body>
+</html>

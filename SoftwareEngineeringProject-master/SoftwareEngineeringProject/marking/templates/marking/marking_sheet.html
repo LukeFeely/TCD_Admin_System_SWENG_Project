@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<!-- Minified Javascript for auto height of text areas -->
+<script type="text/javascript">
+function AutoHeightTextArea(t){t.clientHeight<t.scrollHeight&&(t.style.height=t.scrollHeight+"px",t.clientHeight<t.scrollHeight&&(t.style.height=1.5*t.scrollHeight-t.clientHeight+"px"))
+}
+</script>
+
+<html>
+<!--action = "marking/submit" -->
+	<form id = "markingForm"  method = "post">
+		{% csrf_token %}
+		
+		<head>
+		{% load static %}
+			<title>Marking Sheet</title>
+			<link rel="stylesheet" href="{% static 'CSS/markingsheet.css'%}">
+			<link rel="shortcut icon" href="{% static 'images/Trinity Favicon.ico' %}" />
+		{% load static %}
+		 <script src="https://kendo.cdn.telerik.com/2017.2.621/js/jquery.min.js"></script> 
+ 		<script src="https://kendo.cdn.telerik.com/2017.2.621/js/jszip.min.js"></script>
+ 		<script src="https://kendo.cdn.telerik.com/2017.2.621/js/kendo.all.min.js"></script>
+		<script src="https://fastcdn.org/FileSaver.js/1.1.20151003/FileSaver.min.js"></script>
+		<script src = "https://cdnjs.cloudflare.com/ajax/libs/downloadjs/1.4.8/download.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+		 <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/spinkit/1.2.5/spinkit.css">
+
+
+
+		
+		<!-- Optional: include a polyfill for ES6 Promises for IE11 and Android browser -->
+		<script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
+			<div style = "height:8vh;width:100vw;background-color:#0E74B8">
+                <div style = "height:100%;width:15%;float:left;position:relative">
+                    <div style = "text-align:center;margin: 0;position: absolute;top: 50%;left: 50%;margin-right: -50%;transform: translate(-50%, -50%);">
+						<div style = "position:relative;height:100%;width:100%;font-size:2em;color:white">Marking</div>
+					</div>
+                </div>
+                <div style = "height:100%;width:65%;float:left;">
+                    
+                </div>
+                <div style = "height:100%;width:10%;float:left;position:relative">
+                    <div style = "text-align:center;margin: 0;position: absolute;top: 50%;left: 50%;margin-right: -50%;transform: translate(-50%, -50%);">
+						<div style = "position:relative;height:100%;width:100%;font-size:1.25em;color:white"><a style = "color:white;text-decoration:none" href = "/marking/uncorrected/">My projects</a></div>
+					</div>
+                </div>
+                <div style = "height:100%;width:10%;float:left;position:relative">
+                    <div style = "text-align:center;margin: 0;position: absolute;top: 50%;left: 50%;margin-right: -50%;transform: translate(-50%, -50%);">
+						<div style = "position:relative;height:100%;width:100%;font-size:1.25em;color:white"><a style = "color:white;text-decoration:none" href = "/marking/">Dashboard</a></div>
+					</div>
+                </div>
+            </div>
+		</head>
+		<body >
+			 
+            <div style = "height:2.5vh"></div>
+            <div id = "myCanvas"  style="width:1024px;margin:auto ; border-style: solid; border-width: 1px; padding-left: 15px; padding-right: 15px; padding-top: 15px ">
+			
+			<h1 style="text-align:center">{{courseName}}</h1>
+			<table>
+				<tr>
+					<td>Dissertation title:  </td>
+					<td><textarea  class = "topTextArea" cols="40" rows ="1" id = "title" name = "title" type = "text" readonly>{{ title }}</textarea></td>
+				</tr>
+				<tr>
+					<td>Student ID: </td>
+					<td><textarea   class = "topTextAreaOdd" cols="40" rows ="1" id = "studentid" name = "studentid" type = "text" readonly>{{ student_number }}</textarea></td>
+				</tr>
+				<tr>
+					<td>Supervisor: </td>
+					<td><textarea   class = "topTextArea" cols="40" rows ="1" id = "supervisor" name = "supervisor" type = "text" readonly>{{ supervisor }}</textarea></td>
+				</tr>
+				<tr>
+					<td>Degree: </td>
+					<td> {{courseName}}</td>
+				</tr>
+				<tr>
+					<td>Date: </td>
+					<td><textarea  class = "topTextArea" cols="40"  rows ="1" id = "date" name = "date" type = "text" readonly>{{ date }}</textarea></td>
+				</tr>
+			</table>
+			<br>
+			<br>
+			<h3 style="text-align:center"></h3>
+			<h2 style="text-align:center" >General comments and description</h2>
+			<p style="text-align:center">Do not enter any marks in this section.
+				This section is completed by the supervisor. Comments in this section will be made available to the second
+				reader prior to their marks being entered./
+			</p>
+			<br>
+			<h3 style="text-align:center">  Scope and Aims </h3>
+			<p style="text-align:center">Mention whether the research was part of a larger body of work, such as a group or continuation research,
+				or was carried out in collaboration with industry.
+			</p>
+			<br>
+			<textarea id = "scopes_and_aims" name = "scopes_and_aims" type = "text" class='parent' rows="6" cols="120" onkeyup="AutoHeightTextArea(this)">{{ data.scopes_and_aims }}</textarea><br/><br/>
+			<br/>
+			<br/>
+			<br/>
+			<h3 style="text-align:center" > Challenges </h3>
+			<p style="text-align:center">What were the major difficulties encountered (technical or other)?
+				Comment on the appropriateness of the solutions, if any, offered.
+				Mention any difficulties you are aware of that may have adversely affected the research in a significant
+				way. Include both difficulties beyond the students control such as equipment unavailability, and other
+				factors in the students work, etc
+			</p>
+			<br>
+			<textarea id = "challenges" name = "challenges" type = "text" class='parent' rows="6" cols="120" onkeyup="AutoHeightTextArea(this)">{{ data.challenges }}</textarea>
+			<br>
+			<br>
+			<br>
+			<br />
+			<br />
+			<br />
+			<br />
+			<h2 style="text-align:center"> Specific criteria </h2>
+			<div>
+				<ol style = "list-style: none">
+					{% for degree in components %}
+					<li>{{ degree.description|safe }}</li>
+					<br />
+					<br />
+					<li>{{ degree.inputBox|safe }}</li>
+					<div class=" gap"> </div>
+					<br />
+					<br / >
+					<br />
+					<br />
+					{% endfor %}
+				</ol>
+				
+			</div>
+			
+			<h3> Notes </h3>
+			<p>Default weightings to be applied if supervisor does not override: Problem statement, motivation, and
+				analysis: 10%, Background Research & Literature Review (15%), Technical content and project execution
+				(50%), Testing, evaluation, critical analysis & conclusions (15%), Report presentation and writing (10%)
+				Dissertations which take the form of critical literature reviews should have not complete the Background
+				section. Marks and comments for the literature review should be combined with the Technical Content
+				section, and the weighting of the literature review set to 0%
+			</p>
+			<br>
+			<div id = "loadingScreen" style = "position:fixed;height:100vh;width:100vw;top:0;left:0;background-color:white;opacity:.6">
+				<div class="sk-three-bounce"  style = "opacity:1;margin-top:45vh">
+				<div class="sk-child sk-bounce1" style = "background-color:#f78c00;opacity:1"></div>
+				<div class="sk-child sk-bounce2" style = "background-color:#f78c00"></div>
+				<div class="sk-child sk-bounce3" style = "background-color:#f78c00"></div>
+			</div>
+			</div>
+			<div class='container'>
+			
+			<input id = "submitButton" class = 'submitButton'  value = "Submit"  name="submitPressed">
+			<input id = "draftButton" class = 'draftButton' type ="submit"  value = "Draft" name="draftPressed">
+			</div>
+	</form>
+	<br>
+	<br>
+	<br>
+        </div>
+	<script src = {% static 'scripts/markingSheet.js'%}></script>
+	<div style = "height:5vh"></div>
+	</body>
+</html>

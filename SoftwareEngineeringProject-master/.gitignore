@@ -1,0 +1,8 @@
+venv/
+*.pyc
+.idea/
+SoftwareEngineeringProject/.vs/*
+desktop.ini
+.vscode/
+.DS_Store
+

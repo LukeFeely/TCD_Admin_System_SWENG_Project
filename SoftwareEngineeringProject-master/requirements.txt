@@ -1,0 +1,4 @@
+Django==2.1.5
+mysqlclient==1.4.1
+django-crispy-forms==1.7.2
+autopep8==1.4.3

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+
+<style>
+
+    table {
+  border-collapse: collapse;
+  width: 100%;
+  font-family: arial, sans-serif;
+}
+
+th, td {
+  text-align: center;
+  padding: 8px;
+}
+
+thead{
+    border: 1px solid #F8F8F8;
+    text-align: center;
+    padding: 10px;
+    background-color: #E0E0E0;
+}
+
+H1{
+    text-align:center;
+    font-family: arial, sans-serif;
+    color: #0E73B9;
+}
+html{
+    height: 100%;
+    display: table;
+    margin: auto;
+}
+body{
+    
+}
+
+tbody:nth-child(odd) {background-color: #f2f2f2; text-align: center}
+
+.viewButton {
+  font-family: arial, sans-serif;
+  border-radius: 25px;
+  background-color: #0E73B9;
+  border: none;
+  color: white;
+  width: 50px;
+  padding: 6px 12px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.viewButton:hover {background-color: #4284b2; color: #ffffff; }
+
+.container{
+    display: flex;
+    justify-content: center;
+}
+
+#zipFiles
+{
+    color:"white"
+}
+</style>
+
+<html lang="en-gb">
+
+
+
+<head>
+     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="/docs/4.3/assets/js/vendor/jquery-slim.min.js"><\/script>')</script><script src="/docs/4.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
+    <script src="https://kendo.cdn.telerik.com/2017.2.621/js/jquery.min.js"></script> 
+    <script src="https://kendo.cdn.telerik.com/2017.2.621/js/jszip.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2017.2.621/js/kendo.all.min.js"></script>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/downloadjs/1.4.8/download.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <script src="http://cdn.jsdelivr.net/g/filesaver.js"></script>
+
+    <title> Corrected Marks </title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'CSS/corrected_marks.css'%}">
+    <link rel="shortcut icon" href="{% static 'images/Trinity Favicon.ico' %}" />
+    <div style = "margin-left:-1vw;margin-top:-1vh;height:8vh;width:102vw;background-color:#0E74B8">
+                <div style = "height:100%;width:15%;float:left;position:relative">
+                    <div style = "text-align:center;margin: 0;position: absolute;top: 50%;left: 50%;margin-right: -50%;transform: translate(-50%, -50%);">
+						<div style = "position:relative;height:100%;width:100%;font-size:1.6em;color:white">Corrected</div>
+					</div>
+                </div>
+                <div style = "height:100%;width:60%;float:left;">
+                    
+                </div>
+                <div style = "height:100%;width:10%;float:left;position:relative">
+                    <div style = "text-align:center;margin: 0;position: absolute;top: 50%;left: 50%;margin-right: -50%;transform: translate(-50%, -50%);">
+						<div style = "position:relative;height:100%;width:100%;font-size:1.25em;color:white"> <a id = "zipFiles">Zip All</a></div>
+					</div>
+                </div>
+                <div style = "height:100%;width:10%;float:left;position:relative">
+                    <div style = "text-align:center;margin: 0;position: absolute;top: 50%;left: 50%;margin-right: -50%;transform: translate(-50%, -50%);">
+						<div style = "position:relative;height:100%;width:100%;font-size:1.25em;color:white"><a style = "color:white;text-decoration:none" href = "/marking/">Dashboard</a></div>
+					</div>
+                </div>
+            </div>
+
+            <script>
+
+                function str2bytes (str) {
+                    var bytes = new Uint8Array(str.length);
+                    for (var i=0; i<str.length; i++) {
+                        bytes[i] = str.charCodeAt(i);
+                    }
+                    return bytes;
+                }
+
+                $("#zipFiles").click(function(){
+                   
+
+
+
+                    var url = "http://localhost:8000/marking/corrected/zip"
+                    var data = {}
+              
+
+
+                       
+                       var xhr = new XMLHttpRequest();
+                        xhr.open('GET', url, true);
+                        xhr.responseType = "blob";
+                        xhr.withCredentials = true;
+                        xhr.onreadystatechange = function (){
+                            if (xhr.readyState === 4) {
+                                var blob = xhr.response;
+                                saveAs(blob, "ResultsArchive.zip");
+    }
+};
+xhr.send();
+
+
+})
+            </script>
+
+</head>
+
+<body>
+    <div style = "height:3vh"></div>
+    <div id = "myCanvas" style = "width:1024px;margin:auto">
+
+    
+        <H1> Corrected Marks </H1>
+
+        <table>
+            <thead >
+                <tr>
+                    <th>Title:</th>
+                    <th>ProjectID:</th>
+                    <th>Supervisors</th>
+                    <th>StudentID:</th>
+                    <th>View Form: </th>
+                </tr>
+            </thead>
+
+            {% for project in project_list %}
+            <tbody >
+                <tr >
+                    <td >{{ project.title }} </td>
+                    <td >{{ project.id }}</td>
+                    <td>{{ project.supervisor }}</td>
+                    <td>{{ project.student }} </td>
+                    <div class = 'container'>
+                    <td><a class = 'viewButton',   href="/marking/viewmark/project/{{ project.projectid }}">View</a></td>
+                    </div>
+                </tr>
+            </tbody>
+
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>

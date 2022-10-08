@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html>
+<form action = "/marking/submit" method = "post">
+{% csrf_token %}
+<body>
+{% load static %}
+ <div style = "margin-left:-1vw;margin-top:-1vh;height:8vh;width:102vw;background-color:#0E74B8;position:fixed;z-index:100">
+        <div style = "height:100%;width:15%;float:left;position:relative">
+            <div style = "text-align:center;margin: 0;position: absolute;top: 50%;left: 50%;margin-right: -50%;transform: translate(-50%, -50%);">
+                <div style = "position:relative;height:100%;width:100%;font-size:1.6em;color:white">Corrected Sheet</div>
+            </div>
+        </div>
+        <div style = "height:100%;width:70%;float:left;">
+            
+        </div>
+        
+        <div style = "height:100%;width:5%;float:left;position:relative">
+            <div style = ";height:100% ;text-align:center;margin: 0;position: absolute;top: 50%;left: 50%;margin-right: -50%;transform: translate(-50%, -50%);">
+                <div style = "position:relative;height:100%;width:100%;font-size:1.25em;color:white"><img id= "pdfButton" style = "height:100%;cursor:pointer"src = {% static 'images/download.png'%} /></div>
+            </div>
+        </div>
+
+        <div style = "height:100%;width:5%;float:left;position:relative">
+            <div style = "text-align:center;margin: 0;position: absolute;top: 50%;left: 50%;margin-right: -50%;transform: translate(-50%, -50%);">
+                <div style = "position:relative;height:100%;width:100%;font-size:1.25em;color:white"><a style = "color:white;text-decoration:none" href = "/marking/">Back</a></div>
+            </div>
+        </div>
+        
+    </div>
+<div style = "margin-left:-1vw;margin-top:-1vh;height:8vh;width:102vw;position:relative;opacity:1;"></div>
+<div style = "width:1024px;margin:auto;position:relative;z-index:1">
+{% load static %}
+<link rel="stylesheet" href="{% static 'CSS/markingsheet.css'%}">
+<div id = "myCanvas">
+<h1 style="text-align:center">Marking Sheet</h1>
+<table>
+    <tr>
+        <td>Dissertation title:  </td>
+        <td>{{ data.title }}</input></td>
+    </tr>
+    <tr>
+        <td>Student ID: </td>
+        <td>{{ data.studentid }}</td>
+    </tr>
+    <tr>
+        <td>Supervisor: </td>
+        <td>{{ data.supervisor }}</input></td>
+    </tr>
+    <tr>
+        <td>Degree: </td>
+        <td> Integrated Computer Science </td>
+    </tr>
+    <tr>
+        <td>Date: </td>
+        <td>{{ data.date }}</input></td>
+    </tr>
+</table>
+
+<br>
+<br>
+<br>
+
+<h3 id = "blankText"  style="text-align:center"></h3>
+
+<h2 style="text-align:center" >General comments and description</h2>
+<p style="text-align:center">Do not enter any marks in this section.
+    This section is completed by the supervisor. Comments in this section will be made available to the second
+    reader prior to their marks being entered./</p>
+
+<br>
+
+<h3 style="text-align:center">  Scope and Aims </h3>
+<p style="text-align:center">Mention whether the research was part of a larger body of work, such as a group or continuation research,
+    or was carried out in collaboration with industry.</p>
+
+<br>
+   <textarea  id = "scopes_and_aims" name = "scopes_and_aims" type = "text" class='parent' rows="6" cols="120">{{ data.scopes_and_aims }}</textarea>
+
+<br>
+
+<h3 style="text-align:center" > Challenges </h3>
+<p style="text-align:center">What were the major difficulties encountered (technical or other)?
+    Comment on the appropriateness of the solutions, if any, offered.
+    Mention any difficulties you are aware of that may have adversely affected the research in a significant
+    way. Include both difficulties beyond the students control such as equipment unavailability, and other
+    factors in the students work, etc</p>
+
+<br>
+    <textarea id = "challenges" name = "challenges" type = "text" class='parent' rows="6" cols="120">{{ data.challenges }}</textarea>
+<br>
+<br>
+<br>
+<h2 style="text-align:center"> Specific criteria </h2>
+
+<h3 style="text-align:center"> Problem statement, motivation, and analysis </h3>
+</container>
+<table id = "firstTable">
+    <tr>
+        <td><b>Distinction (70+%) </b></td>
+        <td>Pass (60-70%)</td>
+        <td>Pass (50-60%)</td>
+        <td>Fail (<50%) </td>
+    </tr>
+    <tr>
+
+        <td id = "firstRow">
+            Demonstrates an excellent
+            understanding of the
+            research problem. The work
+            is clearly motivated, with
+            deep critical analysis of the
+            problem. The research
+            objectives are clearly stated
+            and given an insightful and
+            critical analysis.
+        </td>
+
+        <td>Demonstrates a
+            good
+            understanding of
+            the research
+            problem,
+            motivates the
+            work very well.
+            The research
+            objectives are
+            clearly stated and
+            analysed.</td>
+        <td>Demonstrates a
+            reasonable
+            understanding of the
+            research problem,
+            though motivation may
+            be lacking. Objectives
+            may be somewhat
+            unclear, and analysis of
+            the problem may be
+            lacking.</td>
+        <td>Poor demonstration
+            of understanding of
+            the research
+            problem, with
+            unclear motivation.
+            No, or poor,
+            analysis of the
+            problem with
+            unclear research
+            objectives.</td>
+    </tr>
+</table>
+
+<br>
+<br>
+
+    <textarea id ="problems_motivation_analysis" name ="problems_motivation_analysis" type = "text" class='parent' rows="6" cols="110">{{ data.problems_motivation_analysis }}</textarea>
+    <div class  = 'child'>
+        <label> Weighing  (%) </label>
+        <input id = "problems_motivation_analysis_weighting" name = "problems_motivation_analysis_weighting" type="number" min="10" max="100" value="{{ data.problems_motivation_analysis_weighting }}">
+        <br>
+        <br>
+        <label> Mark (%) </label>
+        <input id ="problems_motivation_analysis_mark" name ="problems_motivation_analysis_mark" type="number" min="10" max="100" value="{{ data.problems_motivation_analysis_mark }}">
+    </div>
+<br>
+
+<h3 style="text-align:center"> Background Research & Literature Review </h3>
+<table>
+    <tr>
+        <td><b>Distinction (70+%) </b></td>
+        <td>Pass (60-70%)</td>
+        <td>Pass (50-60%)</td>
+        <td>Fail (<50%) </td>
+    </tr>
+    <tr>
+        <td>
+            Work of high quality,
+            thorough review of the
+            literature demonstrating
+            extensive knowledge of
+            past/current work/authors
+            in the field. Critical and
+            analytical perspective,
+            data collection &
+            analysis. Exceptional
+            ability to relate theoretical
+            knowledge to project
+            work.
+        </td>
+
+        <td>
+            Work of good quality,
+            demonstrating a good
+            knowledge of past/current
+            work/authors in the field.
+            Evidence of a depth of
+            analysis and breadth of
+            viewpoint reaching
+            conclusions of critical and
+            analytical perceptive insight at
+            MSc level. Above average
+            ability to relate theoretical
+            knowledge to project work.
+        </td>
+
+        <td>
+            Work of fair quality
+            showing knowledge,
+            understanding and
+            application of
+            relevant writing in
+            the field. More
+            descriptive than
+            critical/analytical.
+            May fall short of
+            applying theoretical
+            principles to project
+            work.
+        </td>
+
+        <td>
+            Work of
+            poor quality
+            with
+            inadequate
+            exploration
+            on literature
+            expected for
+            this level of
+            study. Does
+            not link with
+            other
+            chapters.
+        </td>
+    </tr>
+
+</table>
+
+<br>
+<br>
+    <textarea id ="research_literature_review" name ="research_literature_review" class='parent' rows="6" cols="110">{{ data.research_literature_review }}</textarea>
+    <div class  = 'child'>
+        <label> Weighing  (%) </label>
+        <input id = "research_literature_review_analysis_weighting" name = "research_literature_review_analysis_weighting" type="number" min="10" max="100" value="{{ data.research_literature_review_analysis_weighting  }}">
+        <br>
+        <br>
+        <label> Mark (%) </label>
+        <input id ="research_literature_review_analysis_mark" name ="research_literature_review_analysis_mark" type="number" min="10" max="100" value="{{ data.research_literature_review_analysis_mark }}">
+    </div>
+<br>
+
+
+<h3 style="text-align:center"> Technical content and project execution </h3>
+
+<table>
+    <tr>
+        <td><b>Distinction (70+%)</b></td>
+        <td>Pass (60-70%)</td>
+        <td>Pass (50-60%)</td>
+        <td>Fail (<50%) </td>
+    </tr>
+    <tr>
+        <td>
+            Appropriate choice
+            of strategy and
+            approach. Clear and
+            logical design.
+            Detailed
+            explanation
+            showing evidence
+            of reading and
+            understanding of
+            methods.
+            Methodology
+            executed rigorously.
+            Limitations
+            recognised.
+            An ambitious
+            project executed
+            well.
+            Work at the higher
+            end of this category
+            may be suitable for
+            publication in a
+            conference of
+            journal venue.
+        </td>
+
+        <td>
+            Appropriate choice of
+            methodology. Clear and
+            logical design. Reasonable
+            explanation showing evidence
+            of understanding of methods.
+            Methodology executed well. A
+            suitably scoped project
+            executed well, or ambitious
+            project with some weaknesses
+            in execution which are
+            acknowledged.
+        </td>
+
+        <td>
+            Appropriate choice
+            without explanation.
+            Methods clear and
+            suitable for topic area.
+            Some evidence of
+            reading and
+            understanding of
+            methodology.
+            Justification and
+            limitations not fully
+            explored. Methodology
+            followed but lacking
+            rigour.
+        </td>
+
+        <td>
+            Unexplained
+            methodology
+            applied. No
+            reference to
+            reading on
+            methodology
+            or data
+            collection.
+            Poor research
+            design, or
+            poorly
+            executed.
+        </td>
+    </tr>
+
+</table>
+
+<br>
+<br>
+    <textarea  id ="technical_content_project_execution" name ="technical_content_project_execution" type = "text" class='parent' rows="6" cols="110">{{ data.technical_content_project_execution }}  
+    </textarea>
+    <div class  = 'child'>
+        <label> Weighing  (%) </label>
+        <input id = "technical_content_project_execution_weighting" name = "technical_content_project_execution_weighting" type="number" min="10" max="100" value="{{ data.technical_content_project_execution_weighting }}">
+        <br>
+        <br>
+        <label> Mark (%) </label>
+        <input id = "technical_content_project_execution_mark" name = "technical_content_project_execution_mark" type="number" min="10" max="100" value="{{ data.technical_content_project_execution_mark }}">
+    </div>
+<br>
+
+<h3 style="text-align:center"> Testing, evaluation, critical analysis & conclusions </h3>
+
+<table id = "test">
+    <tr>
+        <td><b>Distinction (70+%)</b></td>
+        <td>Pass (60-70%)</td>
+        <td>Pass (50-60%)</td>
+        <td>Fail (<50%) </td>
+    </tr>
+    <tr>
+        <td>
+            Appropriate choice
+            of strategy and
+            approach. Clear and
+            logical design.
+            Detailed
+            explanation
+            showing evidence
+            of reading and
+            understanding of
+            methods.
+            Methodology
+            executed rigorously.
+            Limitations
+            recognised.
+            An ambitious
+            project executed
+            well.
+            Work at the higher
+            end of this category
+            may be suitable for
+            publication in a
+            conference of
+            journal venue.
+        </td>
+
+        <td>
+            Appropriate choice of
+            methodology. Clear and
+            logical design. Reasonable
+            explanation showing evidence
+            of understanding of methods.
+            Methodology executed well. A
+            suitably scoped project
+            executed well, or ambitious
+            project with some weaknesses
+            in execution which are
+            acknowledged.
+        </td>
+
+        <td>
+            Appropriate choice
+            without explanation.
+            Methods clear and
+            suitable for topic area.
+            Some evidence of
+            reading and
+            understanding of
+            methodology.
+            Justification and
+            limitations not fully
+            explored. Methodology
+            followed but lacking
+            rigour.
+        </td>
+
+        <td>
+            Unexplained
+            methodology
+            applied. No
+            reference to
+            reading on
+            methodology
+            or data
+            collection.
+            Poor research
+            design, or
+            poorly
+            executed.
+        </td>
+    </tr>
+
+</table>
+
+<br>
+<br>
+    <textarea id ="testing_evaluation_analysis_conclusions" name ="testing_evaluation_analysis_conclusions" type ="text" class='parent' rows="6" cols="110">{{ data.testing_evaluation_analysis_conclusions }}</textarea>
+    <div class  = 'child'>
+        <label> Weighing  (%) </label>
+        <input id = "testing_evaluation_analysis_conclusions_weighting" name = "testing_evaluation_analysis_conclusions_weighting" type="number" min="10" max="100" value="{{ data.testing_evaluation_analysis_conclusions_weighting  }}">
+        <br>
+        <br>
+        <label> Mark (%) </label>
+        <input id = "testing_evaluation_analysis_conclusions_mark" name = "testing_evaluation_analysis_conclusions_mark" type="number" min="10" max="100" value="{{ data.testing_evaluation_analysis_conclusions_mark }}">
+    </div>
+<br>
+
+
+<h3 style="text-align:center"> Report presentation and writing </h3>
+
+<table>
+    <tr>
+        <td><b>Distinction (70+%)</b></td>
+        <td>Pass (60-70%)</td>
+        <td>Pass (50-60%)</td>
+        <td>Fail (<50%) </td>
+    </tr>
+    <tr>
+        <td>
+            Dissertation is excellently
+            written, coherent,
+            internally consistent, well
+            organized and
+            exceptionally argued. The
+            report adheres throughout
+            to academic conventions
+            with respect to formatting
+            and referencing and is
+            carefully and effectively
+            presented. Excellent use of
+            figures, tables, and
+            diagrams where
+            appropriate.
+        </td>
+
+        <td>
+            The dissertation is
+            coherent, internally
+            consistent, well
+            organized and
+            lucidly argued.
+            Generally adheres
+            to academic
+            conventions and is
+            overall carefully
+            and effectively
+            presented. Suitable
+            use of figures,
+            diagrams, and
+            tables is made.
+        </td>
+
+        <td>
+            Dissertation is less than
+            secure in its through
+            line of argument and
+            organization, and in its
+            integration of different
+            sections. Presents some
+            unsupported assertions.
+            Displays some
+            discrepancies in
+            language and academic
+            convention usage. Some
+            use of figures, diagrams,
+            and tables.
+        </td>
+
+        <td>
+            Dissertation
+            presents
+            incomplete and
+            flawed
+            explanations,
+            evidence and
+            argumentation.
+            Writing is of a
+            poor standard. Has
+            a lack of internal
+            consistency.
+            Makes insufficient
+            or incorrect use of
+            figures, diagrams,
+            and tables.
+        </td>
+    </tr>
+
+</table>
+
+<br>
+<br>
+    <textarea  id = "presentation_and_writing" name = "presentation_and_writing" type = "text" class='parent' rows="6" cols="110">{{ data.presentation_and_writing }}</textarea>
+    <div class  = 'child'>
+        <label> Weighing  (%) </label>
+        <input id = "presentation_and_writing_weighting" name = "presentation_and_writing_weighting" type="number" min="10" max="100" value="{{ data.presentation_and_writing_weighting }}">
+        <br>
+        <br>
+        <label> Mark (%) </label>
+        <input id = "presentation_and_writing_mark" name = "presentation_and_writing_mark" type="number" min="10" max="100" value="{{ data.presentation_and_writing_mark }}">
+    </div>
+<br>
+
+<h3> Notes </h3>
+<p>Default weightings to be applied if supervisor does not override: Problem statement, motivation, and
+    analysis: 10%, Background Research & Literature Review (15%), Technical content and project execution
+    (50%), Testing, evaluation, critical analysis & conclusions (15%), Report presentation and writing (10%)
+    Dissertations which take the form of critical literature reviews should have not complete the Background
+    section. Marks and comments for the literature review should be combined with the Technical Content
+    section, and the weighting of the literature review set to 0%</p>
+
+<br>
+</form>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="/docs/4.3/assets/js/vendor/jquery-slim.min.js"><\/script>')</script><script src="/docs/4.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
+ <script src="https://kendo.cdn.telerik.com/2017.2.621/js/jquery.min.js"></script> 
+ <script src="https://kendo.cdn.telerik.com/2017.2.621/js/jszip.min.js"></script>
+ <script src="https://kendo.cdn.telerik.com/2017.2.621/js/kendo.all.min.js"></script>
+
+<script>
+function ExportPdf(){ 
+kendo.drawing
+.drawDOM("#myCanvas", 
+{ 
+paperSize: "A4",
+margin: { top: "1cm", bottom: "1cm",right:"2.5cm",left:"2.5cm" },
+scale: 0.5,
+height: 500,
+width:1024
+})
+.then(function(group){
+kendo.drawing.pdf.saveAs(group, "Exported.pdf")
+});
+}
+
+$("#pdfButton").click(function(){
+    ExportPdf()
+})
+
+
+</script>
+
+</div>
+</div>
+</body>
+
+
+</html>
